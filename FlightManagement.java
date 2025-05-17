@@ -30,6 +30,7 @@ public class FlightManagement {
     }
 
     public void loginMenu(){
+        // register a new user, or log in as customer or staff
         
         System.out.println("Select a user type:");
         System.out.println("(new) new customer");
@@ -58,24 +59,7 @@ public class FlightManagement {
             choice = "";
             System.out.printf("User %s added\n\n", name);
         } else if(choice.equals("customer")){
-            Customer cust = null;
-            System.out.println("Login using your email: ");
-            String email = input.nextLine();
-            for(Customer c:customers){
-                if(c.getEmail().equals(email)){
-                    cust = c;
-                    break;
-                }
-            }
-            if(cust == null){
-                System.out.println("No customer account was found with that email.");
-                System.out.println();
-            }else{
-                currentUser = "customer";
-                System.out.printf("Welcome, %s",cust.getName());
-                System.out.println();
-                System.out.println();
-            }
+            currentUser = "customer";
         } else if(choice.equals("staff")){
             System.out.println("Welcome, staff member.");
             currentUser = "staff";
@@ -89,7 +73,45 @@ public class FlightManagement {
     }
 
     public void customerMenu(){
-        // this needs a logout option to set currentUser to "". This will revert the loop back to login menu
+        Scanner input = new Scanner(System.in);
+        
+        Customer cust = null;
+        System.out.println("Login using your email: ");
+        String email = input.nextLine();
+        for(Customer c:customers){
+            if(c.getEmail().equals(email)){
+                cust = c;
+                break;
+            }
+        }
+        if(cust == null){
+            System.out.println("No customer account was found with that email.");
+            System.out.println();
+            currentUser = "";
+        }else{
+            System.out.printf("Welcome, %s",cust.getName());
+            System.out.println();
+            System.out.println();
+        }
+
+        while(cust != null){
+            System.out.println("Select an action: ");
+            System.out.println("(book) make a new booking");
+            System.out.println("(modify) modify a booking");
+            System.out.println("(logout) log out of customer menu");
+
+            String choice = input.nextLine();
+            if(choice.equals("book")){
+                //booking logic
+            }else if(choice.equals("modify")){
+                //modifying logic
+            }else if(choice.equals("logout")){
+                System.out.println("Logging out.\n");
+                break;
+            }
+        }
+        // if loop is exited, log out customer
+        currentUser = "";
     }
 
     public void staffMenu(){
